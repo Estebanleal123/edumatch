@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Cerebro from "../components/Cerebro";
 import Logo from "../components/Logo";
 import { api } from "../api";
 
@@ -136,23 +137,25 @@ export default function Prueba() {
         <Link className="linkish" to="/admin">Dashboard admin</Link>
       </header>
 
+      <div className="lapiz-apoyo" aria-hidden="true" />
       <main className="wrap">
         {error && <div className="error">{error}</div>}
 
         {fase === "datos" && (
-          <section className="hero">
+          <section className="hero pizarra">
+            <Cerebro />
             <h1>Descubre 3 carreras que van contigo</h1>
-            <p>Responde una prueba corta, con actividades para elegir y ordenar. Al final guardamos tu resultado para que el colegio lo pueda ver en el dashboard.</p>
-            <form className="panel" onSubmit={enviar}>
+            <p className="muted">Responde una prueba corta, con actividades para elegir y ordenar. Al final guardamos tu resultado para que el colegio lo pueda ver en el dashboard.</p>
+            <form onSubmit={enviar}>
               <label>Cómo quieres el color de tu prueba</label>
               <div className="genders">
                 <button type="button" className={datos.genero === "hombre" ? "gender on-hombre" : "gender"} onClick={() => cambiar("genero", "hombre")}>
                   <b>Hombre</b>
-                  <span className="muted">Logo y acentos en azul</span>
+                  <span className="muted">Lápiz y tiza en azul</span>
                 </button>
                 <button type="button" className={datos.genero === "mujer" ? "gender on-mujer" : "gender"} onClick={() => cambiar("genero", "mujer")}>
                   <b>Mujer</b>
-                  <span className="muted">Logo y acentos en rosa</span>
+                  <span className="muted">Lápiz y tiza en rosa</span>
                 </button>
               </div>
               <div className="grid-2">
@@ -181,7 +184,7 @@ export default function Prueba() {
         )}
 
         {fase === "quiz" && pregunta && (
-          <section className="panel">
+          <section className="pizarra">
             <div className="steps">
               {quiz.map((item, indice) => <i key={item.id} className={indice <= paso ? "on" : ""} />)}
             </div>
@@ -214,7 +217,7 @@ export default function Prueba() {
               })}
             </div>
             <div className="row">
-              <button className="btn ghost" type="button" onClick={() => setPaso((n) => Math.max(0, n - 1))} disabled={paso === 0}>Atrás</button>
+              <button className="btn eraser" type="button" onClick={() => setPaso((n) => Math.max(0, n - 1))} disabled={paso === 0}>Atrás</button>
               {paso < quiz.length - 1 ? (
                 <button className="btn" type="button" disabled={!pasoListo()} onClick={() => setPaso((n) => n + 1)}>Siguiente</button>
               ) : (
@@ -225,7 +228,8 @@ export default function Prueba() {
         )}
 
         {fase === "resultado" && resultado && (
-          <section>
+          <section className="pizarra">
+            <Cerebro />
             <h1>Listo, {resultado.nombre.split(" ")[0]}</h1>
             <p className="muted">Estas son tus 3 opciones, de la que más te aplica a la que menos. Quedaron guardadas para el dashboard del colegio.</p>
             <div className="result">

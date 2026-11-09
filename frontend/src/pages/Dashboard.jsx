@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import Cerebro from "../components/Cerebro";
 import Logo from "../components/Logo";
 import { api } from "../api";
 
@@ -73,6 +74,7 @@ export default function Dashboard() {
       <div className="app tone-mix">
         <div className="login-wrap">
           <form className="panel login" onSubmit={entrar}>
+            <Cerebro />
             <div className="brand">
               <Logo tone="mix" />
               <div>
@@ -117,7 +119,7 @@ export default function Dashboard() {
               <div className="muted">Colegio, salón, promedio y 3 opciones por estudiante</div>
             </div>
             <div className="spacer" />
-            <button className="btn ghost" type="button" onClick={salir}>Salir</button>
+            <button className="btn eraser" type="button" onClick={salir}>Salir</button>
           </header>
           {error && <div className="error">{error}</div>}
           <div className="filters">
@@ -135,6 +137,8 @@ export default function Dashboard() {
             <article className="stat"><span className="muted">Mujeres</span><b style={{ color: "var(--pink)" }}>{mujeres}</b></article>
             <article className="stat"><span className="muted">Promedio del grupo</span><b>{promedio}</b></article>
           </div>
+          <div className="pizarra">
+            <Cerebro />
           <div className="charts">
             <article className="chart-card">
               <strong>Por género</strong>
@@ -200,6 +204,7 @@ export default function Dashboard() {
               </tbody>
             </table>
           </article>
+          </div>
         </section>
       </div>
     </div>
@@ -225,7 +230,7 @@ function Donut({ hombres, mujeres }) {
         strokeLinecap="butt"
         transform="rotate(-90 60 60)"
       />
-      <circle cx="60" cy="60" r="28" fill="#10182b" />
+      <circle cx="60" cy="60" r="28" fill="#1b4c52" />
     </svg>
   );
 }
