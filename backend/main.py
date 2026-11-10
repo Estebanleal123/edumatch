@@ -112,13 +112,27 @@ QUESTIONS = [
 
 RANK_WEIGHTS = [4, 3, 2, 1]
 
+COLEGIOS = [
+    {"nombre": "Colegio La Gaitana (IED)", "localidad": "Suba"},
+    {"nombre": "Colegio Tibabuyes Universal (IED)", "localidad": "Suba"},
+    {"nombre": "Colegio Delia Zapata Olivella (IED)", "localidad": "Suba"},
+    {"nombre": "Colegio El Salitre - Suba (IED)", "localidad": "Suba"},
+    {"nombre": "Colegio Nueva Colombia (IED)", "localidad": "Suba"},
+    {"nombre": "Colegio Prado Veraniego (IED)", "localidad": "Suba"},
+    {"nombre": "Colegio Eduardo Santos (IED)", "localidad": "Los Mártires"},
+    {"nombre": "Colegio Liceo Nacional Antonia Santos (IED)", "localidad": "Los Mártires"},
+    {"nombre": "Colegio San Francisco de Asís (IED)", "localidad": "Los Mártires"},
+    {"nombre": "Colegio Técnico Menorah (IED)", "localidad": "Los Mártires"},
+]
+COLEGIOS_VALIDOS = {item["nombre"] for item in COLEGIOS}
+
 SEEDS = [
-    {"nombre": "Mateo Gil", "genero": "hombre", "colegio": "Colegio Nueva Esperanza", "salon": "11A", "promedio": 4.2, "respuestas": {"q1": "codigo", "q2": ["logica", "visual", "gente", "cuerpo"], "q3": "plataforma", "q4": "informatica", "q5": ["computador", "plan"], "q6": "solucion"}},
-    {"nombre": "Valentina Rojas", "genero": "mujer", "colegio": "Colegio Nueva Esperanza", "salon": "11A", "promedio": 4.6, "respuestas": {"q1": "disenar", "q2": ["visual", "gente", "logica", "cuerpo"], "q3": "revista", "q4": "artes", "q5": ["tableta", "escucha"], "q6": "idea"}},
-    {"nombre": "Sara Mendoza", "genero": "mujer", "colegio": "IED El Porvenir", "salon": "10B", "promedio": 3.9, "respuestas": {"q1": "cuidar", "q2": ["cuerpo", "gente", "visual", "logica"], "q3": "bienestar", "q4": "biologia", "q5": ["botiquin", "escucha"], "q6": "emocion"}},
-    {"nombre": "Juan Pablo Ortiz", "genero": "hombre", "colegio": "IED El Porvenir", "salon": "11B", "promedio": 4.0, "respuestas": {"q1": "debatir", "q2": ["gente", "logica", "visual", "cuerpo"], "q3": "convivencia", "q4": "lenguaje", "q5": ["escucha", "plan"], "q6": "justo"}},
-    {"nombre": "Camila Duarte", "genero": "mujer", "colegio": "Colegio San Luis", "salon": "11A", "promedio": 4.7, "respuestas": {"q1": "vender", "q2": ["gente", "logica", "visual", "cuerpo"], "q3": "emprendimiento", "q4": "economia", "q5": ["plan", "computador"], "q6": "pasos"}},
-    {"nombre": "Andrés Peña", "genero": "hombre", "colegio": "Colegio San Luis", "salon": "10A", "promedio": 3.6, "respuestas": {"q1": "disenar", "q2": ["visual", "logica", "gente", "cuerpo"], "q3": "plataforma", "q4": "artes", "q5": ["tableta", "computador"], "q6": "idea"}},
+    {"nombre": "Mateo Gil", "genero": "hombre", "colegio": "Colegio La Gaitana (IED)", "salon": "11A", "promedio": 4.2, "respuestas": {"q1": "codigo", "q2": ["logica", "visual", "gente", "cuerpo"], "q3": "plataforma", "q4": "informatica", "q5": ["computador", "plan"], "q6": "solucion"}},
+    {"nombre": "Valentina Rojas", "genero": "mujer", "colegio": "Colegio La Gaitana (IED)", "salon": "11A", "promedio": 4.6, "respuestas": {"q1": "disenar", "q2": ["visual", "gente", "logica", "cuerpo"], "q3": "revista", "q4": "artes", "q5": ["tableta", "escucha"], "q6": "idea"}},
+    {"nombre": "Sara Mendoza", "genero": "mujer", "colegio": "Colegio Eduardo Santos (IED)", "salon": "10B", "promedio": 3.9, "respuestas": {"q1": "cuidar", "q2": ["cuerpo", "gente", "visual", "logica"], "q3": "bienestar", "q4": "biologia", "q5": ["botiquin", "escucha"], "q6": "emocion"}},
+    {"nombre": "Juan Pablo Ortiz", "genero": "hombre", "colegio": "Colegio Eduardo Santos (IED)", "salon": "11B", "promedio": 4.0, "respuestas": {"q1": "debatir", "q2": ["gente", "logica", "visual", "cuerpo"], "q3": "convivencia", "q4": "lenguaje", "q5": ["escucha", "plan"], "q6": "justo"}},
+    {"nombre": "Camila Duarte", "genero": "mujer", "colegio": "Colegio Tibabuyes Universal (IED)", "salon": "11A", "promedio": 4.7, "respuestas": {"q1": "vender", "q2": ["gente", "logica", "visual", "cuerpo"], "q3": "emprendimiento", "q4": "economia", "q5": ["plan", "computador"], "q6": "pasos"}},
+    {"nombre": "Andrés Peña", "genero": "hombre", "colegio": "Colegio Tibabuyes Universal (IED)", "salon": "10A", "promedio": 3.6, "respuestas": {"q1": "disenar", "q2": ["visual", "logica", "gente", "cuerpo"], "q3": "plataforma", "q4": "artes", "q5": ["tableta", "computador"], "q6": "idea"}},
 ]
 
 
@@ -167,6 +181,67 @@ def iniciar_db():
                         datetime.now().isoformat(timespec="seconds"),
                     ),
                 )
+        sembrar_piloto(conn)
+
+
+PLANES = [
+    (8, 4), (5, 6), (7, 3), (4, 8), (6, 5), (9, 3),
+    (3, 9), (6, 7), (5, 5), (8, 6), (4, 6), (7, 5),
+]
+SALONES_PILOTO = ["10A", "10B", "11A", "11B", "11C"]
+NOMBRES_HOMBRE = ["Santiago", "Tomás", "Nicolás", "Samuel", "Emiliano", "Diego", "Andrés", "Felipe", "Daniel", "Sebastián", "Martín", "Joaquín", "Alejandro", "David", "Camilo", "Esteban", "Julián", "Miguel", "Pablo", "Simón", "Jerónimo", "Luciano"]
+NOMBRES_MUJER = ["Valentina", "Lucía", "Mariana", "Isabella", "Sofía", "Camila", "Salomé", "Antonella", "Gabriela", "Daniela", "Sara", "Emma", "Regina", "Renata", "Ana", "Juliana", "Manuela", "Laura", "Elena", "Paula", "Antonia", "Victoria"]
+APELLIDOS = ["Cárdenas", "Herrera", "Quintero", "Beltrán", "Osorio", "Pardo", "Castaño", "Rincón", "Suárez", "Acosta", "Mejía", "Navarro", "Ibáñez", "Cifuentes", "Montoya", "Salazar", "Prieto", "Forero", "Bermúdez", "Arenas", "Pineda", "Ospina", "Galindo", "Restrepo"]
+PERFILES = [
+    {"q1": "codigo", "q2": ["logica", "visual", "gente", "cuerpo"], "q3": "plataforma", "q4": "informatica", "q5": ["computador", "plan"], "q6": "solucion"},
+    {"q1": "cuidar", "q2": ["cuerpo", "gente", "visual", "logica"], "q3": "bienestar", "q4": "biologia", "q5": ["botiquin", "escucha"], "q6": "emocion"},
+    {"q1": "disenar", "q2": ["visual", "gente", "logica", "cuerpo"], "q3": "revista", "q4": "artes", "q5": ["tableta", "escucha"], "q6": "idea"},
+    {"q1": "vender", "q2": ["gente", "logica", "visual", "cuerpo"], "q3": "emprendimiento", "q4": "economia", "q5": ["plan", "computador"], "q6": "pasos"},
+    {"q1": "debatir", "q2": ["gente", "logica", "cuerpo", "visual"], "q3": "convivencia", "q4": "lenguaje", "q5": ["escucha", "plan"], "q6": "justo"},
+    {"q1": "codigo", "q2": ["gente", "logica", "visual", "cuerpo"], "q3": "plataforma", "q4": "lenguaje", "q5": ["computador", "escucha"], "q6": "emocion"},
+]
+
+
+def nombre_piloto(lista, indice):
+    return f"{lista[indice % len(lista)]} {APELLIDOS[(indice // len(lista)) % len(APELLIDOS)]}"
+
+
+def sembrar_piloto(conn):
+    marca = conn.execute(
+        "SELECT COUNT(*) AS n FROM estudiantes WHERE colegio = ?",
+        ("Colegio La Gaitana (IED)",),
+    ).fetchone()["n"]
+    if marca:
+        return
+    indice_h = 0
+    indice_m = 0
+    for numero, colegio in enumerate(COLEGIOS):
+        hombres, mujeres = PLANES[numero % len(PLANES)]
+        for genero, cantidad, base in (("hombre", hombres, indice_h), ("mujer", mujeres, indice_m)):
+            for paso in range(cantidad):
+                indice = base + paso
+                respuestas = PERFILES[(numero + paso + (0 if genero == "hombre" else 2)) % len(PERFILES)]
+                conn.execute(
+                    """
+                    INSERT INTO estudiantes
+                    (nombre, genero, colegio, salon, promedio, respuestas, recomendaciones, demo, creado)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)
+                    """,
+                    (
+                        nombre_piloto(NOMBRES_HOMBRE if genero == "hombre" else NOMBRES_MUJER, indice),
+                        genero,
+                        colegio["nombre"],
+                        SALONES_PILOTO[(numero + paso) % len(SALONES_PILOTO)],
+                        round(3.2 + ((numero * 3 + paso * 5) % 17) / 10, 1),
+                        json.dumps(respuestas),
+                        json.dumps(recomendar(respuestas)),
+                        datetime.now().isoformat(timespec="seconds"),
+                    ),
+                )
+            if genero == "hombre":
+                indice_h += cantidad
+            else:
+                indice_m += cantidad
 
 
 def opcion(pregunta, opcion_id):
@@ -334,6 +409,11 @@ def quiz():
     return [pregunta_publica(pregunta) for pregunta in QUESTIONS]
 
 
+@app.get("/api/colegios")
+def colegios():
+    return COLEGIOS
+
+
 @app.post("/api/intentos")
 def crear_intento(datos: Intento):
     genero = datos.genero.strip().lower()
@@ -341,6 +421,8 @@ def crear_intento(datos: Intento):
         raise HTTPException(400, "Elige hombre o mujer para el color de tu prueba")
     if datos.promedio < 0 or datos.promedio > 5:
         raise HTTPException(400, "El promedio va de 0 a 5")
+    if datos.colegio.strip() not in COLEGIOS_VALIDOS:
+        raise HTTPException(400, "Elige un colegio de Suba o Los Mártires")
     recomendaciones = recomendar(datos.respuestas)
     with conectar() as conn:
         cursor = conn.execute(

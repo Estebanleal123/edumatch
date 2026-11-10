@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BuscadorColegio from "../components/BuscadorColegio";
 import Cerebro from "../components/Cerebro";
 import Logo from "../components/Logo";
 import { api } from "../api";
@@ -16,12 +17,14 @@ export default function Prueba() {
   const [error, setError] = useState("");
   const [cargando, setCargando] = useState(false);
   const [queda, setQueda] = useState(null);
+  const [colegios, setColegios] = useState([]);
 
   const tono = datos.genero || "mix";
   const pregunta = quiz[paso];
 
   useEffect(() => {
     api("/api/quiz").then(setQuiz).catch(() => setError("No pude cargar la prueba. Revisa que el servidor esté encendido."));
+    api("/api/colegios").then(setColegios).catch(() => setError("No pude cargar los colegios. Revisa que el servidor esté encendido."));
   }, []);
 
   useEffect(() => {
@@ -81,8 +84,12 @@ export default function Prueba() {
       return;
     }
     const promedio = Number(datos.promedio);
-    if (!datos.nombre.trim() || !datos.colegio.trim() || !datos.salon.trim() || Number.isNaN(promedio)) {
-      setError("Completa nombre, colegio, salón y promedio.");
+    if (!datos.nombre.trim() || !datos.salon.trim() || Number.isNaN(promedio)) {
+      setError("Completa nombre, salón y promedio.");
+      return;
+    }
+    if (!colegios.some((item) => item.nombre === datos.colegio)) {
+      setError("Busca tu colegio y selecciónalo de la lista.");
       return;
     }
     if (promedio < 0 || promedio > 5) {
@@ -143,7 +150,7 @@ export default function Prueba() {
 
         {fase === "datos" && (
           <section className="hero pizarra">
-            <Cerebro />
+            <p className="lema">Piensa bien lo que quieres elegir.</p>
             <h1>Descubre 3 carreras que van contigo</h1>
             <p className="muted">Responde una prueba corta, con actividades para elegir y ordenar. Al final guardamos tu resultado para que el colegio lo pueda ver en el dashboard.</p>
             <form onSubmit={enviar}>
@@ -164,8 +171,8 @@ export default function Prueba() {
                   <input value={datos.nombre} onChange={(e) => cambiar("nombre", e.target.value)} placeholder="Tu nombre" />
                 </div>
                 <div>
-                  <label>Colegio</label>
-                  <input value={datos.colegio} onChange={(e) => cambiar("colegio", e.target.value)} placeholder="Nombre del colegio" />
+                  <label>Colegio de Suba o Los Mártires</label>
+                  <BuscadorColegio colegios={colegios} valor={datos.colegio} onElegir={(nombre) => cambiar("colegio", nombre)} />
                 </div>
                 <div>
                   <label>Salón</label>
