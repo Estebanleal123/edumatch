@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import Cerebro from "../components/Cerebro";
 import Logo from "../components/Logo";
 import { api } from "../api";
 
@@ -79,11 +78,11 @@ export default function Dashboard() {
 
   if (!token) {
     return (
-      <div className="app tone-mix">
+      <div className="app">
         <div className="login-wrap">
           <form className="panel login" onSubmit={entrar}>
             <div className="brand">
-              <Logo tone="mix" />
+              <Logo />
               <div>
                 <strong>EduMatch</strong>
                 <span>Dashboard del admin</span>
@@ -107,11 +106,11 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="app tone-mix">
+    <div className="app">
       <div className="dash">
         <aside className="side">
           <div className="brand">
-            <Logo tone="mix" size={40} />
+            <Logo size={40} />
             <strong>EduMatch</strong>
           </div>
           <nav>
@@ -128,8 +127,8 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="spacer" />
-            {actual && <button className="btn eraser" type="button" onClick={() => abrir("")}>Volver</button>}
-            <button className="btn eraser" type="button" onClick={salir}>Salir</button>
+            {actual && <button className="btn ghost" type="button" onClick={() => abrir("")}>Volver</button>}
+            <button className="btn ghost" type="button" onClick={salir}>Salir</button>
           </header>
           {error && <div className="error">{error}</div>}
 
@@ -141,8 +140,7 @@ export default function Dashboard() {
                 <article className="stat"><span className="muted">Hombres</span><b style={{ color: "var(--blue)" }}>{hombresVista}</b></article>
                 <article className="stat"><span className="muted">Promedio</span><b>{promedioGeneral}</b></article>
               </div>
-              <div className="pizarra">
-                <Cerebro />
+              <div className="panel">
                 <div className="charts">
                   <article className="chart-card">
                     <strong>Pruebas por colegio</strong>
@@ -188,8 +186,7 @@ export default function Dashboard() {
                 <article className="stat"><span className="muted">Mujeres</span><b style={{ color: "var(--pink)" }}>{mujeresVista}</b></article>
                 <article className="stat"><span className="muted">Promedio del grupo</span><b>{promedioDe(visibles)}</b></article>
               </div>
-              <div className="pizarra">
-                <Cerebro />
+              <div className="panel">
                 <div className="charts">
                   <article className="chart-card">
                     <strong>Por género</strong>
@@ -326,7 +323,7 @@ function Donut({ hombres, mujeres }) {
         strokeLinecap="butt"
         transform="rotate(-90 60 60)"
       />
-      <circle cx="60" cy="60" r="28" fill="#1b4c52" />
+      <circle cx="60" cy="60" r="28" fill="#ffffff" />
     </svg>
   );
 }

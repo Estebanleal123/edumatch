@@ -418,7 +418,7 @@ def colegios():
 def crear_intento(datos: Intento):
     genero = datos.genero.strip().lower()
     if genero not in ("hombre", "mujer"):
-        raise HTTPException(400, "Elige hombre o mujer para el color de tu prueba")
+        raise HTTPException(400, "Elige hombre o mujer")
     if datos.promedio < 0 or datos.promedio > 5:
         raise HTTPException(400, "El promedio va de 0 a 5")
     if datos.colegio.strip() not in COLEGIOS_VALIDOS:

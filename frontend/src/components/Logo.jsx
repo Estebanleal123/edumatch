@@ -1,14 +1,14 @@
 import { useId } from "react";
 
-export default function Logo({ tone = "mix", size = 44 }) {
+export default function Logo({ size = 44 }) {
   const raw = useId().replace(/:/g, "");
-  const fill = tone === "hombre" ? "#3b82f6" : tone === "mujer" ? "#fb4b93" : `url(#${raw})`;
+  const fill = `url(#${raw})`;
   return (
     <svg className="logo" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
       <defs>
         <linearGradient id={raw} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#fb4b93" />
+          <stop offset="0%" stopColor="#f0a07a" />
+          <stop offset="100%" stopColor="#e07a4f" />
         </linearGradient>
       </defs>
       <path
